@@ -76,8 +76,8 @@ var UIController = (function(){
             return {
             type: document.querySelector(DOMstrings.inputType).value, //value will read thevalue of the add__type i.e; "inc" or "exp"
             description: document.querySelector(DOMstrings.inputDescription).value,
-            value: document.querySelector(DOMstrings.inputValue).value
-            };
+            value: parseFloat(document.querySelector(DOMstrings.inputValue).value)};
+
 
         },
 
@@ -149,6 +149,17 @@ var controller = (function(budgetCtrl, UICtrl){
     };
 
 
+    var updateBudget = function(){
+
+        //4. Calculate the budget
+
+        //5. Return the budget
+
+        //6. Display the budget on UI
+
+
+    };
+
 
 
     var ctrlAddItem = function(){
@@ -158,25 +169,23 @@ var controller = (function(budgetCtrl, UICtrl){
         //1. get input data
         input = UICtrl.getInput();
 
-        //2. add item to the budget controller
+        if(input.description !== "" && !isNaN(input.value) && input.value > 0){
+                 //2. add item to the budget controller
         newItem = budgetCtrl.addItem(input.type, input.description, input.value);
 
         //3. Add the new Item to UI
         UICtrl.addListItem(newItem, input.type);
 
-        //Clear fields
+        //4. Clear fields
         UICtrl.clearFields();
 
-        //4. Calculate the bidget
-
-        //5. Display the budget on UI
-
+        //5. Calculate and update budget
+        }
 
     };
 
     return{
         init: function(){
-            console.log('Hi');
             setupEventListners();
         }
     };
