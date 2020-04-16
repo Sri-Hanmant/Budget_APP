@@ -88,7 +88,7 @@ var UIController = (function(){
 
             if(type === 'inc'){
                 element = DOMstrings.incomeContainer;
-                 html = '<div class="item clearfix" id="income-%id%"> <div class="item__description">%description%</div> <div class="right clearfix"> <div class="item__value">%value%</div> <div class="item__delete"> <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button> </div> </div></div>'
+                html = '<div class="item clearfix" id="income-%id%"> <div class="item__description">%description%</div> <div class="right clearfix"> <div class="item__value">%value%</div> <div class="item__delete"> <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button> </div> </div></div>'
             } else if(type === 'exp'){
                 element = DOMstrings.expenseContainer;
                 html = '<div class="item clearfix" id="expense-%id%"> <div class="item__description">%description%</div> <div class="right clearfix"> <div class="item__value">%value%</div> <div class="item__percentage">21%</div> <div class="item__delete"> <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button> </div> </div> </div>'
@@ -105,13 +105,22 @@ var UIController = (function(){
         },
 
 				clearFields: function(){
-					var fields;
+				    var fields, fieldArray;
 
-					fields = document.querySelectorAll(DOMstrings.inputDescription + ', ' + DOMstrings.inputValue);
+				    fields = document.querySelectorAll(DOMstrings.inputDescription + ', ' + DOMstrings.inputValue);
 
+            fieldArray = Array.prototype.slice.call(fields);
+
+            fieldArray.forEach(function(current, index, array){
+                current.value = "";
+
+            });
+
+            fieldArray[0].focus();
 
 
 				},
+
         getDOMstrings: function(){
             return DOMstrings;
         }
@@ -153,7 +162,10 @@ var controller = (function(budgetCtrl, UICtrl){
         newItem = budgetCtrl.addItem(input.type, input.description, input.value);
 
         //3. Add the new Item to UI
-        UIController.addListItem(newItem, input.type);
+        UICtrl.addListItem(newItem, input.type);
+
+        //Clear fields
+        UICtrl.clearFields();
 
         //4. Calculate the bidget
 
